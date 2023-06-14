@@ -1,0 +1,46 @@
+kubectl get nodes
+
+List all the pods in all namespaces:
+
+kubectl get pods --all-namespaces
+
+List all the namespaces in the cluster:
+
+kubectl get namespaces
+
+kubectl get pods
+
+Use the following command to find the IP address of the API server:
+
+kubectl get pods --all-namespaces -o wide
+
+
+Use the following command to list the labels for all nodes:
+
+kubectl get no --show-labels
+We should see the label disk=ssd for one of the nodes.
+
+Create the pod YAML that will run on the node labeled disk=ssd
+Create a file named pod.yaml (vi pod.yaml) and paste in the following:
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+spec:
+  containers:
+    - name: nginx
+      image: nginx
+  nodeSelector:
+    disk: ssd
+    
+Apply the YAML to the Kubernetes cluster with the following command:
+
+kubectl apply -f pod.yaml
+
+Verify that the pod is running on the correct node
+
+
+kubectl get po -o wide
+
+
